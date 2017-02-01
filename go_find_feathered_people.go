@@ -17,9 +17,11 @@ func findBirdies() {
 	// first listing doesn't show all details - follow link?
 	seconddoc.Find("div.pet_results.rounded_corner").Each(
 		func(index int, item *goquery.Selection) {
-			birdname := item.Find("p a.name").Text()
+			mainbird := item.Find("p a.name")
+			birdname := mainbird.Text()
 			fmt.Printf("Bird Name:  %s \n", birdname)
-			//detailslink := item.Find("p a")
+			detailslink, _ := mainbird.Attr("href")
+			fmt.Printf("Details Link :  %s  \n", detailslink)
 			birdgender := item.Find("a").Text()
 			fmt.Printf("Bird Gender:  %s  \n", birdgender)
 			//species := item.Find("p a.name").Text()
