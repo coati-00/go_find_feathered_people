@@ -19,6 +19,7 @@ func findBirdies() {
 		func(index int, item *goquery.Selection) {
 			birdname := item.Find("p a.name").Text()
 			fmt.Printf("Bird Name:  %s \n", birdname)
+			//detailslink := item.Find("p a")
 			birdgender := item.Find("a").Text()
 			fmt.Printf("Bird Gender:  %s  \n", birdgender)
 			//species := item.Find("p a.name").Text()
@@ -26,7 +27,9 @@ func findBirdies() {
 			//rescueorg := item.Find("p a").Text()
 			rescueorgtownstate := item.Find("p a.name").Text()
 			fmt.Printf("Location:   %s  \n", rescueorgtownstate)
-			//photo := item.Find("span.featured-thumbnail a img").Attr('src')
+			phototag := item.Find("span.featured-thumbnail a img")
+			photo, _ := phototag.Attr("src")
+			fmt.Printf("Photo :   %s  \n", photo)
 		})
 
 }
@@ -55,6 +58,12 @@ func check(err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
+}
+
+func followLink(url string) {
+
+	//follow link on page and get more details/info
+
 }
 
 /* SAMPLE LISTING - Adopt A Pet
