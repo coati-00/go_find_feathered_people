@@ -19,19 +19,17 @@ func findBirdies() {
 		func(index int, item *goquery.Selection) {
 			mainbird := item.Find("p a.name")
 			birdname := mainbird.Text()
-			fmt.Printf("Bird Name:  %s \n", birdname)
+			fmt.Printf("Bird Name:  %s\n", birdname)
 			detailslink, _ := mainbird.Attr("href")
-			fmt.Printf("Details Link :  %s  \n", detailslink)
-			birdgender := item.Find("a").Text()
-			fmt.Printf("Bird Gender:  %s  \n", birdgender)
-			//species := item.Find("p a.name").Text()
-			//rescueorgname := item.Find("p a.name").Text()
-			//rescueorg := item.Find("p a").Text()
+			followLink(detailslink)
+			fmt.Printf("Details Link : %s\n", detailslink)
+			birdgender := item.Find(":first-child a").Text()
+			fmt.Printf("Bird Gender:  %s\n", birdgender)
 			rescueorgtownstate := item.Find("p a.name").Text()
-			fmt.Printf("Location:   %s  \n", rescueorgtownstate)
+			fmt.Printf("Location: %s\n", rescueorgtownstate)
 			phototag := item.Find("span.featured-thumbnail a img")
 			photo, _ := phototag.Attr("src")
-			fmt.Printf("Photo :   %s  \n", photo)
+			fmt.Printf("Photo : %s\n", photo)
 		})
 
 }
@@ -64,7 +62,42 @@ func check(err error) {
 
 func followLink(url string) {
 
-	//follow link on page and get more details/info
+	detailsdoc, err := goquery.NewDocument(url)
+	check(err)
+	//fmt.Printf("Followed Link: %s\n", detailsdoc)
+	// first listing doesn't show all details - follow link?
+	detailsdoc.Find("div.container div.row").Each(
+		func(index int, item *goquery.Selection) {
+			//rescuename := item.Find("h3.museo500 span").Text()
+			//fmt.Printf("Location: %s\n", rescuename)
+			//fmt.Printf("\n\nWorking on following link\n")
+
+			// use sidebar for rescue info
+			rescuesidebar := item.Find("div.body.contact_sidebar.hidden-xs")
+			//fmt.Printf("Rescue Sidebar: %s\n", rescuesidebar.Text())
+
+			// Go over each of the listed items in the side bar and extract correct info
+			rescuename := rescuesidebar.Find("ul li a").First().Text()
+			fmt.Printf("Rescue Name: %s\n", rescuename)
+			rescuephone := rescuesidebar.Find("ul li a").Text()
+			fmt.Printf("Rescue Phone: %s\n", rescuephone)
+			rescueemail := rescuesidebar.Find("ul li a").Text()
+			fmt.Printf("Rescue Location: %s\n", rescueemail)
+			//rescuewebsite := rescuesidebar.Find("ul li a").Text()
+			//fmt.Printf("Location: %s\n", rescuewebsite)
+			//rescueorgtownstate := item.Find("ul li a").Text()
+			//fmt.Printf("Location: %s\n", rescueorgtownstate)
+			// mainbird := item.Find("p a.name")
+			// birdname := mainbird.Text()
+			// fmt.Printf("Bird Name:  %s\n", birdname)
+			// detailslink, _ := mainbird.Attr("href")
+			// fmt.Printf("Details Link : %s\n", detailslink)
+			// birdgender := item.Find(":first-child a").Text()
+			// fmt.Printf("Bird Gender: %s\n", birdgender)
+			// phototag := item.Find("span.featured-thumbnail a img")
+			// photo, _ := phototag.Attr("src")
+			// fmt.Printf("Photo : %s\n", photo)
+		})
 
 }
 
