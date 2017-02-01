@@ -83,10 +83,27 @@ func followLink(url string) {
 			fmt.Printf("Rescue Phone: %s\n", rescuephone)
 			rescueemail := rescuesidebar.Find("ul li a").Text()
 			fmt.Printf("Rescue Location: %s\n", rescueemail)
-			//rescuewebsite := rescuesidebar.Find("ul li a").Text()
-			//fmt.Printf("Location: %s\n", rescuewebsite)
-			//rescueorgtownstate := item.Find("ul li a").Text()
-			//fmt.Printf("Location: %s\n", rescueorgtownstate)
+			rescuesidebar.Find("ul li").Each(func(index int, item *goquery.Selection) {
+				if item.Find("b").Text() == "Rescue Group:" {
+					fmt.Printf("Each Rescue Name: %s\n", item.Find("a").Text())
+				}
+				if item.Find("b").Text() == "Phone:" {
+					fmt.Printf("Loop Each Rescue Phone: %s\n", item.Find("a").Text())
+				}
+				if item.Find("b").Text() == "E-mail:" {
+					fmt.Printf("Loop Each Rescue E-mail: %s\n", item.Find("a").Text())
+				}
+				if item.Find("b").Text() == "Website:" {
+					fmt.Printf("Loop Each Rescue Website: %s\n", item.Find("a").Text())
+				}
+				if item.Find("b").Text() == "Address:" {
+					fmt.Printf("Loop Each Rescue Address: %s\n", item.Text())
+				}
+			})
+			// rescuewebsite := rescuesidebar.Find("ul li a").Text()
+			// fmt.Printf("Location: %s\n", rescuewebsite)
+			// rescueorgtownstate := item.Find("ul li a").Text()
+			// fmt.Printf("Location: %s\n", rescueorgtownstate)
 			// mainbird := item.Find("p a.name")
 			// birdname := mainbird.Text()
 			// fmt.Printf("Bird Name:  %s\n", birdname)
