@@ -64,25 +64,15 @@ func followLink(url string) {
 
 	detailsdoc, err := goquery.NewDocument(url)
 	check(err)
-	//fmt.Printf("Followed Link: %s\n", detailsdoc)
-	// first listing doesn't show all details - follow link?
+
+	// first listing doesn't show all details - follow link to get them
 	detailsdoc.Find("div.container div.row").Each(
 		func(index int, item *goquery.Selection) {
-			//rescuename := item.Find("h3.museo500 span").Text()
-			//fmt.Printf("Location: %s\n", rescuename)
-			//fmt.Printf("\n\nWorking on following link\n")
 
 			// use sidebar for rescue info
 			rescuesidebar := item.Find("div.body.contact_sidebar.hidden-xs")
-			//fmt.Printf("Rescue Sidebar: %s\n", rescuesidebar.Text())
 
 			// Go over each of the listed items in the side bar and extract correct info
-			rescuename := rescuesidebar.Find("ul li a").First().Text()
-			fmt.Printf("Rescue Name: %s\n", rescuename)
-			rescuephone := rescuesidebar.Find("ul li a").Text()
-			fmt.Printf("Rescue Phone: %s\n", rescuephone)
-			rescueemail := rescuesidebar.Find("ul li a").Text()
-			fmt.Printf("Rescue Location: %s\n", rescueemail)
 			rescuesidebar.Find("ul li").Each(func(index int, item *goquery.Selection) {
 				if item.Find("b").Text() == "Rescue Group:" {
 					fmt.Printf("Each Rescue Name: %s\n", item.Find("a").Text())
@@ -100,20 +90,7 @@ func followLink(url string) {
 					fmt.Printf("Loop Each Rescue Address: %s\n", item.Text())
 				}
 			})
-			// rescuewebsite := rescuesidebar.Find("ul li a").Text()
-			// fmt.Printf("Location: %s\n", rescuewebsite)
-			// rescueorgtownstate := item.Find("ul li a").Text()
-			// fmt.Printf("Location: %s\n", rescueorgtownstate)
-			// mainbird := item.Find("p a.name")
-			// birdname := mainbird.Text()
-			// fmt.Printf("Bird Name:  %s\n", birdname)
-			// detailslink, _ := mainbird.Attr("href")
-			// fmt.Printf("Details Link : %s\n", detailslink)
-			// birdgender := item.Find(":first-child a").Text()
-			// fmt.Printf("Bird Gender: %s\n", birdgender)
-			// phototag := item.Find("span.featured-thumbnail a img")
-			// photo, _ := phototag.Attr("src")
-			// fmt.Printf("Photo : %s\n", photo)
+
 		})
 
 }
