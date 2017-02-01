@@ -69,6 +69,36 @@ func followLink(url string) {
 	detailsdoc.Find("div.container div.row").Each(
 		func(index int, item *goquery.Selection) {
 
+			// get bird!
+			birdinfobox := item.Find("div.blue_highlight.no_margin.top_margin_xlarge ul li")
+			birdinfobox.Each(func(index int, item *goquery.Selection) {
+				if item.Find("b").Text() == "Breed" {
+					fmt.Printf("Species: %s\n", item.Text())
+				}
+				if item.Find("b").Text() == "Color:" {
+					fmt.Printf("Color: %s\n", item.Text())
+				}
+				if item.Find("b").Text() == "Age:" {
+					fmt.Printf("Age: %s\n", item.Text())
+				}
+				if item.Find("b").Text() == "Sex:" {
+					fmt.Printf("Sex: %s\n", item.Text())
+				}
+			})
+
+			// birdy info
+			item.Find("div.info_box.row div div div.body").Each(
+				func(index int, item *goquery.Selection) {
+					fmt.Printf("Birdy Info: %s\n", item.Text())
+				})
+
+			// birdy large pic  div.col-sm-7 div.large_image img
+			item.Find("div.col-sm-7 div.large_image").Each(
+				func(index int, item *goquery.Selection) {
+					largephoto, _ := item.Find("img").Attr("src")
+					fmt.Printf("Large Bird Photo: %s\n", largephoto)
+				})
+
 			// use sidebar for rescue info
 			rescuesidebar := item.Find("div.body.contact_sidebar.hidden-xs")
 
